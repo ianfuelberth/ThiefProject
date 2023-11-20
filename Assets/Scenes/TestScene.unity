@@ -253,7 +253,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 429654739}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbabccae3265a8a4f9efb6871cf519f1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -465,7 +465,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480472439}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbabccae3265a8a4f9efb6871cf519f1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -854,7 +854,6 @@ GameObject:
   - component: {fileID: 937497744}
   - component: {fileID: 937497743}
   - component: {fileID: 937497745}
-  - component: {fileID: 937497747}
   - component: {fileID: 937497746}
   m_Layer: 0
   m_Name: Player
@@ -873,7 +872,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -931,11 +930,25 @@ MonoBehaviour:
   playerHeight: 2
   groundMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 64
+  grounded: 0
   maxSlopeAngle: 45
-  orientation: {fileID: 1056983208}
+  climbMask:
+    serializedVersion: 2
+    m_Bits: 64
+  climbSpeed: 5
+  maxClimbTime: 0.75
+  climbing: 0
+  canClimb: 1
+  wallDetectionLength: 1
+  sphereCastRadius: 0.25
+  maxWallLookAngle: 30
+  minWallNormalAngleChange: 5
+  exitingWall: 0
+  exitWallTime: 1
   freeze: 0
   activeGrapple: 0
+  orientation: {fileID: 1056983208}
   state: 0
 --- !u!114 &937497746
 MonoBehaviour:
@@ -959,23 +972,6 @@ MonoBehaviour:
   outlineCastRange: 3
   outlineCastColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   outlineCastWidth: 3
---- !u!114 &937497747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 937497742}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e811d35368b6043b156e42e51a587c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolObjects: []
-  activeToolIndex: 0
-  toolbelt: {fileID: 0}
-  noToolPrefab: {fileID: 6083059250849941187, guid: 75618e9ba1b8db741ac45a585aa7776a, type: 3}
-  player: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1410,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063391268}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbabccae3265a8a4f9efb6871cf519f1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1813,7 +1809,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649314819}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbabccae3265a8a4f9efb6871cf519f1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1918,7 +1914,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916202662}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbabccae3265a8a4f9efb6871cf519f1, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

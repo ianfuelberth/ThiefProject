@@ -24,25 +24,52 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask groundMask;
-    bool grounded;
+    public bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    [Header("Climbing")]
+    public LayerMask climbMask;
+    public float climbSpeed;
+    public float maxClimbTime;
+    private float climbTimer;
+    public bool climbing;
+    public bool canClimb = true;
+
+    [Header("Climbing - Wall Detection")]
+    public float wallDetectionLength;
+    public float sphereCastRadius;
+    public float maxWallLookAngle;
+    private float wallLookAngle;
+    private RaycastHit frontWallHit;
+    private bool wallInFront;
+    private Transform lastWall;
+    private Vector3 lastWallNormal;
+    public float minWallNormalAngleChange;
+    // Exiting
+    public bool exitingWall;
+    public float exitWallTime;
+    private float exitWallTimer;
+
+    [Header("Grappling")]
+    public bool freeze;
+    public bool activeGrapple;
+
+
     [Header("Misc.")]
     public Transform orientation;
+    Rigidbody rb;
 
     float horizontalInput;
     float verticalInput;
 
     Vector3 moveDir;
 
-    Rigidbody rb;
-    
-    public bool freeze;
-    public bool activeGrapple;
+
+
 
     public MovementState state;
     public enum MovementState
@@ -50,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         walking,
         sprinting,
         crouching,
+        climbing,
         air,
         freeze
     }
@@ -68,10 +96,23 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
-        
+        if (grounded)
+        {
+            canClimb = true;
+        }
+
         MyInput();
         SpeedControl();
         StateHandler();
+
+        // climbing
+        ClimbWallCheck();
+        CheckClimbState();
+
+        if (climbing && !exitingWall)
+        {
+            ClimbingMovement();
+        }
 
         // handle drag
         if (grounded && !activeGrapple)
@@ -81,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.drag = 0;
+            rb.angularDrag = 0;
         }
 
     }
@@ -98,6 +140,12 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.freeze;
             moveSpeed = 0;
             rb.velocity = Vector3.zero;
+        }
+
+        // Mode - Climbing
+        else if (climbing)
+        {
+            state = MovementState.climbing;
         }
 
         // Mode - Crouching
@@ -157,6 +205,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         if (activeGrapple) return;
+        if (exitingWall) return;
 
         // calculate movement direction
         moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
@@ -184,6 +233,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // disable gravity while on slope (prevents sliding)
+        if (OnSlope())
+        {
+            Debug.Log("On Slope");
+        }
         rb.useGravity = !OnSlope();
     }
 
@@ -210,7 +263,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
         }
-        
+
     }
 
     private void Jump()
@@ -224,11 +277,13 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         canJump = true;
+        canClimb = true;
         exitingSlope = false;
     }
 
     private bool OnSlope()
     {
+
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
@@ -242,6 +297,84 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
     }
 
+    #region climbing
+    private void ClimbWallCheck()
+    {
+        wallInFront = Physics.SphereCast(transform.position, sphereCastRadius, orientation.forward, out frontWallHit, wallDetectionLength, climbMask);
+        wallLookAngle = Vector3.Angle(orientation.forward, -frontWallHit.normal);
+
+        bool newWall = frontWallHit.transform != lastWall || Mathf.Abs(Vector3.Angle(lastWallNormal, frontWallHit.normal)) > minWallNormalAngleChange;
+
+        if ((wallInFront && newWall) || grounded)
+        {
+            climbTimer = maxClimbTime;
+        }
+    }
+
+    private void StartClimbing()
+    {
+        climbing = true;
+
+        lastWall = frontWallHit.transform;
+        lastWallNormal = frontWallHit.normal;
+    }
+
+    private void ClimbingMovement()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, climbSpeed, rb.velocity.z);
+    }
+    private void StopClimbing()
+    {
+        climbing = false;
+        canClimb = false;
+    }
+
+    private void CheckClimbState()
+    {
+        // Climbing
+        if (wallInFront && Input.GetKey(KeyCode.W) && wallLookAngle < maxWallLookAngle && !exitingWall && canClimb)
+        {
+            if (!climbing && climbTimer > 0)
+            {
+                StartClimbing();
+            }
+
+            // CLIMBING TIMER
+            if (climbTimer > 0)
+            {
+                climbTimer -= Time.deltaTime;
+            }
+            if (climbTimer < 0)
+            {
+                exitingWall = true;
+                exitWallTimer = exitWallTime;
+                StopClimbing();
+            }
+        
+        }
+        // Exiting Climb
+        else if (exitingWall)
+        {
+            if (climbing)
+            {
+                StopClimbing();
+                exitingWall = true;
+                exitWallTimer = exitWallTime;
+            }
+
+            if (exitWallTimer > 0) exitWallTimer -= Time.deltaTime;
+            if (exitWallTimer < 0) exitingWall = false;
+        }
+        // Not Climbing
+        else
+        {
+            if (climbing) StopClimbing();
+        }
+        
+    }
+    #endregion
+
+    #region grapplinghook
     public void GrappleJumpToPosition(Vector3 targetPosition, float trajectoryHeight)
     {
         activeGrapple = true;
@@ -290,4 +423,5 @@ public class PlayerMovement : MonoBehaviour
 
         return velocityXZ + velocityY;
     }
+    #endregion
 }
