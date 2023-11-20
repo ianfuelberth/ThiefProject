@@ -13,11 +13,12 @@ public class ThrowableTool : Tool
     [SerializeField] private float throwForwardForce = 10f;
     [SerializeField] private float throwUpwardForce = 2f;
 
+    /*
     private bool isCollidingWithPlayer = false;
     private bool isWaitingToEnableCollisions = false;
     private float waitTime = 0;
     private GameObject heldTool;
-
+    */
     public override ToolType ToolType { get { return toolType; } }
     public override string ToolName { get { return toolName; } }
     public override int Count
@@ -30,13 +31,12 @@ public class ThrowableTool : Tool
     {
         base.Start();
 
-        isWaitingToEnableCollisions = false;
+        // isWaitingToEnableCollisions = false;
     }
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
-
+        /*
         if (isWaitingToEnableCollisions && !isCollidingWithPlayer)
         {
             if (waitTime >= 0.6)
@@ -56,6 +56,7 @@ public class ThrowableTool : Tool
                 waitTime += Time.deltaTime;
             }
         }
+        */
     }
 
     #region ToolActions
@@ -69,7 +70,7 @@ public class ThrowableTool : Tool
         playerCam.GetComponentInChildren<ToolbeltController>().Throw(gameObject, throwForwardForce, throwUpwardForce);
     }
     #endregion
-
+    /*
     #region PlayerCollision
     private void OnCollisionEnter(Collision collision)
     {
@@ -98,4 +99,5 @@ public class ThrowableTool : Tool
         heldTool = heldObject;
     }
     #endregion
+    */
 }

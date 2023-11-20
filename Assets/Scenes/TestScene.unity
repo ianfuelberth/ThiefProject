@@ -929,11 +929,13 @@ MonoBehaviour:
   crouchSpeed: 1.75
   crouchYScale: 0.75
   playerHeight: 2
-  whatIsGround:
+  groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
   maxSlopeAngle: 45
   orientation: {fileID: 1056983208}
+  freeze: 0
+  activeGrapple: 0
   state: 0
 --- !u!114 &937497746
 MonoBehaviour:
@@ -1797,7 +1799,7 @@ GameObject:
   - component: {fileID: 1649314822}
   - component: {fileID: 1649314821}
   - component: {fileID: 1649314820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4496,6 +4498,67 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &8236004403735101791
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 99410419335604987, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: grappleSource
+      value: 
+      objectReference: {fileID: 1308443392}
+    - target: {fileID: 534303902487198557, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_Name
+      value: GrapplingHook
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609877858967073038, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa51a8a4b42994148aeb48dad7f770d3, type: 3}
 --- !u!1 &8313710254917937284
 GameObject:
   m_ObjectHideFlags: 0
@@ -4791,3 +4854,4 @@ SceneRoots:
   - {fileID: 759922716}
   - {fileID: 264884028}
   - {fileID: 1563569724}
+  - {fileID: 8236004403735101791}

@@ -106,14 +106,14 @@ public class ToolbeltController : MonoBehaviour
         if (!canDrop) { return; }
         DisableClipping();
         
-        ThrowableTool tool = toolObj.GetComponent<ThrowableTool>();
+        Tool tool = toolObj.GetComponent<Tool>();
 
         if (tool.Count > 1)
         {
             GameObject dropObj = Instantiate(toolObj, toolbelt.position, transform.rotation);
             dropObj.GetComponent<Tool>().Count -= 1;
 
-            QueueReEnableCollisionsWith(dropObj.GetComponent<ThrowableTool>(), GetActiveTool().gameObject);
+            QueueReEnableCollisionsWith(dropObj.GetComponent<Tool>(), GetActiveTool().gameObject);
             Physics.IgnoreCollision(dropObj.GetComponent<Collider>(), GetActiveTool().gameObject.GetComponent<Collider>(), true);
 
             Rigidbody dropObjRb = dropObj.GetComponent<Rigidbody>();
@@ -127,7 +127,7 @@ public class ToolbeltController : MonoBehaviour
         {
             GameObject dropObj = GetActiveTool().gameObject;
 
-            QueueReEnableCollisionsWith(dropObj.GetComponent<ThrowableTool>(), GetActiveTool().gameObject);
+            QueueReEnableCollisionsWith(dropObj.GetComponent<Tool>(), GetActiveTool().gameObject);
             Physics.IgnoreCollision(dropObj.GetComponent<Collider>(), GetActiveTool().gameObject.GetComponent<Collider>(), true);
 
             Rigidbody dropObjRb = dropObj.GetComponent<Rigidbody>();
@@ -218,7 +218,7 @@ public class ToolbeltController : MonoBehaviour
         }
     }
 
-    private void QueueReEnableCollisionsWith(ThrowableTool tool, GameObject heldObject)
+    private void QueueReEnableCollisionsWith(Tool tool, GameObject heldObject)
     {
         tool.QueueReEnableCollisionWith(heldObject);
     }
