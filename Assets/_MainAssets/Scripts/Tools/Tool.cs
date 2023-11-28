@@ -11,8 +11,9 @@ public enum ToolType
     // Throwables
     DefaultThrowable,
     Bone,
-    // Experimental
-    Grapple
+    // Tools
+    Grapple,
+    Flashlight
 
 }
 
