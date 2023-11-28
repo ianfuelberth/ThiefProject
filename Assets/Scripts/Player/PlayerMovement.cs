@@ -141,20 +141,17 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = 0;
             rb.velocity = Vector3.zero;
         }
-
         // Mode - Climbing
         else if (climbing)
         {
             state = MovementState.climbing;
         }
-
         // Mode - Crouching
         else if (Input.GetKey(PlayerKeybinds.CROUCH_KEY))
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
-        }
-
+        }.
         // Mode - Sprinting
         else if (grounded && Input.GetKey(PlayerKeybinds.SPRINT_KEY))
         {
