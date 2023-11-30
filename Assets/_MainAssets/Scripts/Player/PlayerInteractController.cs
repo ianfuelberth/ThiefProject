@@ -31,7 +31,7 @@ public class PlayerInteractController : MonoBehaviour
     {
         nonHeldLayer = ~(1 << LayerMask.NameToLayer("holdLayer"));
         canvas = GameObject.FindWithTag("Canvas");
-        scoreTrackerScript = canvas.GetComponent<Score>();
+        scoreTrackerScript = canvas.GetComponentInChildren<Score>();
     }
 
     void Update()

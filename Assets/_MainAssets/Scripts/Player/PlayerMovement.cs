@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioClip footSteps;
+    AudioSource audioSource;
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -90,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         canJump = true;
 
         startYScale = transform.localScale.y;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -222,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDir.normalized * moveSpeed * 10f, ForceMode.Force);
+            audioSource.PlayOneShot(footSteps);
         }
         // in air
         else if (!grounded)
