@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerInteractController : MonoBehaviour
 {
+    private GameObject canvas;
+    private Score scoreTrackerScript;
+
     [Header("References")]
     public Transform InteractSource;
 
@@ -28,6 +31,9 @@ public class PlayerInteractController : MonoBehaviour
     void Start()
     {
         nonHeldLayer = ~(1 << LayerMask.NameToLayer("holdLayer"));
+
+        canvas = GameObject.FindWithTag("Canvas");
+        scoreTrackerScript = canvas.GetComponentInChildren<Score>();
     }
 
     void Update()
@@ -40,6 +46,8 @@ public class PlayerInteractController : MonoBehaviour
                 if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     interactObj.Interact();
+
+                    scoreTrackerScript.IncScore(15);
                 }
             }
         }
