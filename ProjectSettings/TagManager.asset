@@ -11,6 +11,8 @@ TagManager:
   - Interactable
   - Toolbelt
   - Canvas
+  - Escape
+  - DevToolManager
   layers:
   - Default
   - TransparentFX

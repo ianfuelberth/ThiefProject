@@ -17,12 +17,14 @@ public class ValuableItem : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
     public int scoreValue = 0;
-
-    public ValuableType type = ValuableType.Money; 
+    [SerializeField]
+    private ValuableType type = ValuableType.Money; 
 
     [Header("References")]
     [SerializeField]
     private Score scoreScript;
+    [SerializeField]
+    private ChecklistController checklistController;
 
     public void Start()
     {
@@ -30,11 +32,24 @@ public class ValuableItem : MonoBehaviour, IInteractable
         {
             scoreScript = GameObject.FindWithTag("Canvas").GetComponentInChildren<Score>();
         }
+
+        if (checklistController == null)
+        {
+            checklistController = GameObject.FindWithTag("Canvas").GetComponentInChildren<ChecklistController>();
+        }
+    }
+
+    public ValuableType GetValuableType()
+    {
+        return type;
     }
 
     public void Interact()
     {
         scoreScript.IncScore(scoreValue);
+
+        checklistController.CheckValuable(this);
+
         Destroy(gameObject);
     }
 }

@@ -148,6 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValue: 75
-  isChecklistItem: 0
-  type: 1
+  type: 0
   scoreScript: {fileID: 0}
+  checklistController: {fileID: 0}
