@@ -302,7 +302,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041702782494513880}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9da76ad986d30dd4e9efa99d90659e30, type: 3}
   m_Name: 
@@ -319,13 +319,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041702782494513880}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab239ce5dbe505741883795e3aef3c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  outlineByProx: 1
+  player: {fileID: 7350584657001012802}
+  outlineByProx: 0
   outlineProxRange: 4
   outlineProxColor: {r: 1, g: 1, b: 1, a: 1}
   outlineProxWidth: 2
@@ -440,7 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25943cd7dde54a9489a9c2285a5c68e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footSteps: {fileID: 0}
   walkSpeed: 4
   sprintSpeed: 6
   groundDrag: 3
@@ -533,7 +532,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7461702992809244010}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73e811d35368b6043b156e42e51a587c, type: 3}
   m_Name: 

@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.05f, groundMask);
         if (grounded)
         {
             canClimb = true;
@@ -230,10 +230,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // disable gravity while on slope (prevents sliding)
-        if (OnSlope())
-        {
-            Debug.Log("On Slope");
-        }
         rb.useGravity = !OnSlope();
     }
 

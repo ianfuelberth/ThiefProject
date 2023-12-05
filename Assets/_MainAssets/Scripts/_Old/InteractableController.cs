@@ -27,6 +27,8 @@ public class InteractableController : MonoBehaviour
 
     private void Start()
     {
+        ReinitializeOutlines();
+
         nonHeld = ~(1 << LayerMask.NameToLayer("holdLayer"));
     }
 
@@ -55,6 +57,20 @@ public class InteractableController : MonoBehaviour
             if (obj.GetComponent<Outline>() != null)
             {
                 obj.GetComponent<Outline>().enabled = false;
+            }
+        }
+    }
+
+    private void ReinitializeOutlines()
+    {
+        GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag("Interactable");
+
+        foreach (GameObject obj in interactableObjects)
+        {
+            if (obj.GetComponent<Outline>() != null)
+            {
+                obj.GetComponent<Outline>().enabled = false;
+                Destroy(obj.GetComponent<Outline>());
             }
         }
     }

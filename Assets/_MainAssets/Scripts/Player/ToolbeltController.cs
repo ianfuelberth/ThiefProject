@@ -78,6 +78,7 @@ public class ToolbeltController : MonoBehaviour
 
                 Rigidbody heldRb = toolObj.GetComponent<Rigidbody>();
                 heldRb.isKinematic = true;
+                toolObj.transform.localRotation = Quaternion.identity;
 
                 Destroy(toolbelt.GetChild(activeToolIndex).gameObject);
                 GameObject newToolInstance = Instantiate(toolObj, toolbelt.transform);

@@ -11,6 +11,8 @@ public enum ToolType
     // Throwables
     DefaultThrowable,
     Bone,
+    // Keys
+    Key,
     // Tools
     Grapple,
     Flashlight
@@ -36,6 +38,7 @@ public abstract class Tool : MonoBehaviour, IInteractable
         if (player == null) player = GameObject.FindGameObjectWithTag("Player");
         if (playerCam == null) playerCam = GameObject.FindGameObjectWithTag("PlayerCameraHolder").GetComponentInChildren<Camera>();
         // if (isWaitingToEnableCollisions == null) isWaitingToEnableCollisions = false;
+
     }
 
     public virtual void Update()
@@ -81,7 +84,9 @@ public abstract class Tool : MonoBehaviour, IInteractable
     {
         if (ToolType != ToolType.NoTool)
         {
+
             playerCam.GetComponent<ToolbeltController>().Equip(gameObject);
+            
         }
     }
 

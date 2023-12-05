@@ -10,6 +10,9 @@ TagManager:
   - Throwable
   - Interactable
   - Toolbelt
+  - Canvas
+  - Escape
+  - DevToolManager
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - UI
   - ground
   - holdLayer
-  - 
+  - tool
   - 
   - 
   - 
