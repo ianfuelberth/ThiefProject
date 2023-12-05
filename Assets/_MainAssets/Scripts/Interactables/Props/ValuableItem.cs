@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ValuableType
+{
+    // Can't be a checklist item, but still gives points
+    Money, 
+    // Checklist Items
+    Trophy,
+    Figurine,
+
+}
+
 
 public class ValuableItem : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
     public int scoreValue = 0;
-    public bool isChecklistItem = false;
+
+    public ValuableType type = ValuableType.Money; 
 
     [Header("References")]
     [SerializeField]
