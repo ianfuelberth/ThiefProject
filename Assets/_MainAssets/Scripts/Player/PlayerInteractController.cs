@@ -47,7 +47,7 @@ public class PlayerInteractController : MonoBehaviour
                 {
                     interactObj.Interact();
 
-                    scoreTrackerScript.IncScore(15);
+                    // scoreTrackerScript.IncScore(15);
                 }
             }
         }

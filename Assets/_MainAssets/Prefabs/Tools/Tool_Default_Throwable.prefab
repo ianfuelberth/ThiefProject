@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5506257952565043906}
   - component: {fileID: 6738092803767171829}
   m_Layer: 0
-  m_Name: ThrowableTool
+  m_Name: Tool_Default_Throwable
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

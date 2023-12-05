@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Button : MonoBehaviour
+public class StartButton : MonoBehaviour
 {
     public void HandleStartButton()
     {
-        SceneManager.LoadScene("OfficeScene");
+        SceneManager.LoadScene("GameScene");
     }
 
 }

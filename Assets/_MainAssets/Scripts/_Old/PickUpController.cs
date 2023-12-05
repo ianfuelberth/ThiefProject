@@ -121,7 +121,14 @@ public class PickUpController : MonoBehaviour
 
                 heldItemRb = obj.GetComponent<Rigidbody>();
                 heldItemRb.isKinematic = true;
-                heldItemRb.transform.parent = activeItemPos.transform;
+                // heldItem.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                // heldItemRb.transform.rotation = Quaternion.identity;
+                heldItem.transform.parent = activeItemPos.transform;
+
+                heldItem.transform.localPosition = Vector3.zero;
+                heldItem.transform.localRotation = Quaternion.identity;
+
+                
 
                 Physics.IgnoreCollision(heldItem.GetComponent<Collider>(), player.GetComponentInChildren<Collider>(), true);
 
@@ -153,9 +160,11 @@ public class PickUpController : MonoBehaviour
 
                     heldItemRb = obj.GetComponent<Rigidbody>();
                     heldItemRb.isKinematic = true;
-                    heldItemRb.transform.parent = activeItemPos.transform;
+                    heldItem.transform.parent = activeItemPos.transform;
 
                     Physics.IgnoreCollision(heldItem.GetComponent<Collider>(), player.GetComponentInChildren<Collider>(), true);
+
+                    heldItem.transform.localRotation = Quaternion.identity;
 
                     hasActiveItem = true;
                 }
@@ -188,7 +197,7 @@ public class PickUpController : MonoBehaviour
             heldItemRb.isKinematic = false;
             heldItem.transform.parent = null;
             heldItem = null;
-            heldItemRb = null;
+            // heldItemRb = null;
 
             itemScript = null;
             itemCount = 0;
