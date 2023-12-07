@@ -97,6 +97,8 @@ public class ToolbeltController : MonoBehaviour
             // If already holding tool of different type
             else
             {
+                StatusDisplay statusDisplay = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<StatusDisplay>();
+                statusDisplay.DisplayMessage(StatusMessage.ToolMismatch);
                 Debug.Log("Cannot pick up item of different type to currently held");
             }
         }

@@ -8,7 +8,8 @@ public enum StatusMessage
     None,
     YouWin,
     YouLose,
-    WrongKey
+    WrongKey,
+    ToolMismatch
 }
 
 
@@ -45,6 +46,10 @@ public class StatusDisplay : MonoBehaviour
         else if (status == StatusMessage.WrongKey)
         { 
             statusText.text = "You are not holding the correct key.";
+        }
+        else if (status == StatusMessage.ToolMismatch)
+        {
+            statusText.text = "You are already holding an object.";
         }
 
         coroutine = StartCoroutine(FadeMessage(displayTime));
