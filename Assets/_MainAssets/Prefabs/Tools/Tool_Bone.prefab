@@ -94,7 +94,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848605078416394074}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e52fb17f9b1e7fd48b8955f1391d3688, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   toolType: 2
   toolName: Bone
   count: 1
-  isActive: 0
+  icon: {fileID: 0}
   throwForwardForce: 10
   throwUpwardForce: 2
 --- !u!114 &-1856393996066989167
