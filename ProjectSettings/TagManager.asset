@@ -13,6 +13,7 @@ TagManager:
   - Canvas
   - Escape
   - DevToolManager
+  - AI
   layers:
   - Default
   - TransparentFX
