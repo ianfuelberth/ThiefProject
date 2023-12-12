@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class ThrowableTool : Tool
     */
     public override ToolType ToolType { get { return toolType; } }
     public override string ToolName { get { return toolName; } }
+    private bool thrown = false;
+    private Navigation navigationScript;
+
     public override int Count
     {
         get { return count; }
@@ -30,6 +34,7 @@ public class ThrowableTool : Tool
     public override void Start()
     {
         base.Start();
+        navigationScript = GameObject.FindWithTag("AI").GetComponent<Navigation>();
 
         // isWaitingToEnableCollisions = false;
     }
@@ -67,9 +72,24 @@ public class ThrowableTool : Tool
 
     public override void SecondaryUse()
     {
+        thrown = true;
         playerCam.GetComponentInChildren<ToolbeltController>().Throw(gameObject, throwForwardForce, throwUpwardForce);
     }
     #endregion
+
+    private void OnCollisionEnter(Collision collision) {
+        if(thrown)
+        {
+            navigationScript.Distract(transform.position);
+            thrown = false;
+        }
+    }
+
+    public Vector3 GetPos()
+    {
+        return transform.position;
+    }
+
     /*
     #region PlayerCollision
     private void OnCollisionEnter(Collision collision)
