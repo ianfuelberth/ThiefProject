@@ -9,6 +9,7 @@ public enum StatusMessage
     YouWin,
     YouLose,
     WrongKey,
+    LockedSide,
     ToolMismatch
 }
 
@@ -50,6 +51,10 @@ public class StatusDisplay : MonoBehaviour
         else if (status == StatusMessage.ToolMismatch)
         {
             statusText.text = "You are already holding an object.";
+        }
+        else if (status == StatusMessage.LockedSide)
+        {
+            statusText.text = "The door is locked from this side.";
         }
 
         coroutine = StartCoroutine(FadeMessage(displayTime));

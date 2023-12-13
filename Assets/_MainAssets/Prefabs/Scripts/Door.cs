@@ -22,6 +22,8 @@ public class Door : MonoBehaviour, IInteractable
 
     [Header("Lock Settings")]
     [SerializeField]
+    private bool unlocksFromBehind = false;
+    [SerializeField]
     private KeyID requiredKey;
     
     [Header("References")]
@@ -47,63 +49,60 @@ public class Door : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        StatusDisplay statusDisplay = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<StatusDisplay>();
+
         if (isLockedDoor)
         {
-            Tool activeTool = Camera.main.GetComponent<ToolbeltController>().GetActiveTool();
-            // check for key
-            if (activeTool.GetType() == typeof(Key))
+            if (unlocksFromBehind)
             {
-                Key activeKey = (Key)activeTool;
-                if (activeKey.IsCorrectKey(requiredKey))
+                if (IsInteractingFromBehind(player.transform.position))
                 {
-                    if (isRotatingDoor)
-                    {
-                        if (isOpen)
-                        {
-                            Close();
-                        }
-                        else
-                        {
-                            Open(player.transform.position);
-                            isLockedDoor = false;
-                        }
-
-                        return;
-                    }
-                    else
-                    {
-                        Debug.Log("Door: isRotatingDoor==false is not implemented.");
-                    }
-
-                    
-                }
-            }
-
-            Debug.Log("You are not currently holding the correct key.");
-            GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<StatusDisplay>().DisplayMessage(StatusMessage.WrongKey);
-        }
-        else
-        {
-            if (isRotatingDoor)
-            {
-                if (isOpen)
-                {
-                    Close();
+                    UseDoor();
+                    return;
                 }
                 else
                 {
-                    Open(player.transform.position);
+                    statusDisplay.DisplayMessage(StatusMessage.LockedSide);
+                    return;
                 }
+            }
+
+            Tool activeTool = Camera.main.GetComponent<ToolbeltController>().GetActiveTool();
+            if (activeTool.GetType() != typeof(Key))
+            {
+                statusDisplay.DisplayMessage(StatusMessage.WrongKey);
+                return;
             }
             else
             {
-                Debug.Log("Door: isRotatingDoor==false is not implemented.");
+                Key activeKey = (Key)activeTool;
+                if (!activeKey.IsCorrectKey(requiredKey))
+                {
+                    statusDisplay.DisplayMessage(StatusMessage.WrongKey);
+                    return;
+                }
             }
         }
 
+        UseDoor();
 
+    }
 
+    private void UseDoor()
+    {
+        isLockedDoor = false;
 
+        if (isRotatingDoor)
+        {
+            if (isOpen)
+            {
+                Close();
+            }
+            else
+            {
+                Open(player.transform.position);
+            }
+        }
     }
 
     public void Open(Vector3 userPosition)
@@ -139,6 +138,19 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    private bool IsInteractingFromBehind(Vector3 userPosition)
+    {
+        float dot = Vector3.Dot(forward, (userPosition - transform.position).normalized);
+        if (dot >= forwardDirection)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     private IEnumerator DoRotationOpen(float forwardAmount)
     {
         Quaternion startRotation = transform.rotation;
@@ -147,10 +159,12 @@ public class Door : MonoBehaviour, IInteractable
         if (forwardAmount >= forwardDirection)
         {
             endRotation = Quaternion.Euler(new Vector3(0, initialRotation.y - rotationAmount, 0));
+            Debug.Log("forward");
         }
         else
         {
             endRotation = Quaternion.Euler(new Vector3(0, initialRotation.y + rotationAmount, 0));
+            Debug.Log("backward");
         }
 
         isOpen = true;

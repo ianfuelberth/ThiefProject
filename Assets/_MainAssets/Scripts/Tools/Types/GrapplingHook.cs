@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrapplingHook : Tool
 {
     [Header("References")]
+    [SerializeField]
     private PlayerMovement pm;
     public Transform grappleSource;
     public LayerMask grappleMask;
@@ -34,7 +35,7 @@ public class GrapplingHook : Tool
     {
         base.Start();
 
-        pm = player.GetComponent<PlayerMovement>();
+        // pm = player.GetComponent<PlayerMovement>();
         lineRenderer.enabled = false;
     }
 

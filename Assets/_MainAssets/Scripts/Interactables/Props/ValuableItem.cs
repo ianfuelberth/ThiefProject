@@ -9,7 +9,12 @@ public enum ValuableType
     // Checklist Items
     Trophy,
     Figurine,
-    Cube
+    ToyCube,
+    Cellphone,
+    Briefcase,
+    VhsTape,
+    FloppyDisk
+
 }
 
 
