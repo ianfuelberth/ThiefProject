@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143881947831434124}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99607605, z: -0, w: 0.08850149}
-  m_LocalPosition: {x: -11.540628, y: 0.7424, z: -8.861287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,6 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValue: 100
-  type: 4
+  type: 3
   scoreScript: {fileID: 0}
   checklistController: {fileID: 0}

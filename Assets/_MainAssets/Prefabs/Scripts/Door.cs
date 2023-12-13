@@ -159,12 +159,10 @@ public class Door : MonoBehaviour, IInteractable
         if (forwardAmount >= forwardDirection)
         {
             endRotation = Quaternion.Euler(new Vector3(0, initialRotation.y - rotationAmount, 0));
-            Debug.Log("forward");
         }
         else
         {
             endRotation = Quaternion.Euler(new Vector3(0, initialRotation.y + rotationAmount, 0));
-            Debug.Log("backward");
         }
 
         isOpen = true;
