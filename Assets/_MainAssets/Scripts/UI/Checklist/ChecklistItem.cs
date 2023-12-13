@@ -18,16 +18,17 @@ public class ChecklistItem: MonoBehaviour
     [SerializeField]
     private TMP_Text strikethrough;
 
-    public void Start()
-    {
-        strikethrough.enabled = false;
-        itemText.text = valuableType.ToString();
-    }
+    
 
-    public ChecklistItem(ValuableType type)
+    
+
+    public void InitializeItem(ValuableType type)
     {
         valuableType = type;
         isCollected = false;
+
+        strikethrough.enabled = false;
+        itemText.text = valuableType.ToString();
     }
 
     public ValuableType GetValuableType()

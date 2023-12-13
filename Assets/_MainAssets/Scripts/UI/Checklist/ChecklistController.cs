@@ -35,11 +35,18 @@ public class ChecklistController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitializeChecklist(ValuableType[] checklistTypes)
     {
-        
-    }
+        for (int i = 0; i < checklistTypes.Length; i++)
+        {
+            if (i > NUM_ITEMS)
+            {
+                return;
+            }
+
+            checklistItems[i].InitializeItem(checklistTypes[i]);
+        }
+    }     
 
     public bool GetIsCompleted()
     {
