@@ -34,7 +34,7 @@ public class ThrowableTool : Tool
     public override void Start()
     {
         base.Start();
-        navigationScript = GameObject.FindWithTag("AI").GetComponent<Navigation>();
+        // navigationScript = GameObject.FindWithTag("AI").GetComponent<Navigation>();
 
         // isWaitingToEnableCollisions = false;
     }
@@ -80,8 +80,13 @@ public class ThrowableTool : Tool
     private void OnCollisionEnter(Collision collision) {
         if(thrown)
         {
-            navigationScript.Distract(transform.position);
-            thrown = false;
+            if (navigationScript != null)
+            {
+                navigationScript.Distract(transform.position);
+                thrown = false;
+            }
+            
+
         }
     }
 
