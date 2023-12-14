@@ -19,10 +19,13 @@ public class Navigation : MonoBehaviour
     private Vector3 distractionPosition;
     private float distractionTimer;
 
+    private GameObject[] patrolPoints;
+
     // Start is called before the first frame update
     void Start()
     {        
         agent = GetComponent<NavMeshAgent>();
+        patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoint");
     }
 
     void Update() 
@@ -44,11 +47,26 @@ public class Navigation : MonoBehaviour
             if (distractionTimer <= 0f) isDistracted = false;
         }
 
+        else if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+        {
+            // If the AI can't find the player and has reached the last known position, go to a random patrol point
+            if (patrolPoints.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, patrolPoints.Length);
+                    GameObject randomPatrolPoint = patrolPoints[randomIndex];
+
+                    // Set the destination to the selected patrol point
+                    agent.SetDestination(randomPatrolPoint.transform.position);
+                }
+        }
+
         if (targetDist <= agent.stoppingDistance)
         {
             // animator.SetFloat("forward", 2.0f);
             // FaceTarget();
         }
+
+        
 
     }
 
@@ -66,7 +84,6 @@ public class Navigation : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("Lost Line of Sight");
         // Line of sight is obstructed
         return false;
     }
@@ -87,7 +104,6 @@ public class Navigation : MonoBehaviour
     // Called when a throwable object is thrown and lands within distraction range
     public void Distract(Vector3 position)
     {
-        Debug.Log(position);
         if (!isDistracted && !HasLineOfSightToPlayer())
         {
             // Set distraction position and start distraction timer

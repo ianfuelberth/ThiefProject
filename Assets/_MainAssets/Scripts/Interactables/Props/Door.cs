@@ -208,5 +208,12 @@ public class Door : MonoBehaviour, IInteractable
         SoundManager.PlaySound(gameObject, SoundEffect.Door_Close, m_Volume);
     }
 
-
+    private void OnCollisionEnter(Collision collision) {
+        Debug.Log(collision);
+        if(collision.gameObject.tag == "AI")
+        {
+            Debug.Log("Collision with the AI!");
+            Open(collision.gameObject.transform.position);
+        }
+    }
 }

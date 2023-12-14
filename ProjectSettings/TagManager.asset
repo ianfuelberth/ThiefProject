@@ -15,6 +15,7 @@ TagManager:
   - DevToolManager
   - AI
   - ValuableSpawn
+  - PatrolPoint
   layers:
   - Default
   - TransparentFX

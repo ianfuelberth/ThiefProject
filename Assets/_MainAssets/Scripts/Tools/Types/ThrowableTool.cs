@@ -34,11 +34,9 @@ public class ThrowableTool : Tool
     public override void Start()
     {
         base.Start();
-        // navigationScript = GameObject.FindWithTag("AI").GetComponent<Navigation>();
-
+        navigationScript = GameObject.FindWithTag("AI").GetComponent<Navigation>();
         // isWaitingToEnableCollisions = false;
     }
-
     public override void FixedUpdate()
     {
         /*
@@ -73,6 +71,7 @@ public class ThrowableTool : Tool
     public override void SecondaryUse()
     {
         thrown = true;
+        
         playerCam.GetComponentInChildren<ToolbeltController>().Throw(gameObject, throwForwardForce, throwUpwardForce);
         //Play sound
         SoundManager.PlaySound(gameObject, SoundEffect.Throw_Regular, 0.5f);
