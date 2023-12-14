@@ -17,12 +17,12 @@ public class WheelMenuScript : MonoBehaviour
     public string selectedItemName = "Empty";
     public int selectedItemCount = 0;
     public Image selectedItemIcon;
-    
+
     [Header("References")]
     public GameObject textDisplay;
     public GameObject[] menuItems;
     public ToolbeltController toolbelt;
-   
+
     private MenuItemScript menuItemScript;
     private MenuItemScript prevMenuItemScript;
 
@@ -38,7 +38,7 @@ public class WheelMenuScript : MonoBehaviour
         {
             EnableMenu();
         }
-        
+
         if (Input.GetKeyUp(PlayerKeybinds.TOOL_MENU_KEY))
         {
             // set player's active toolbelt index to new selection
@@ -55,7 +55,7 @@ public class WheelMenuScript : MonoBehaviour
             currentAngle = (((currentAngle + 360 + 90 + 22.5f) % 360));
 
             selection = (int)(currentAngle / (360 / 8));
-            
+
             if (selection != prevSelection)
             {
                 prevMenuItemScript = menuItems[prevSelection].GetComponent<MenuItemScript>();
@@ -72,7 +72,7 @@ public class WheelMenuScript : MonoBehaviour
                 textDisplay.GetComponent<MenuDisplayScript>().UpdateDisplay(selectedItemName, selectedItemCount);
             }
         }
-        
+
     }
 
     public void EnableMenu()
@@ -87,9 +87,11 @@ public class WheelMenuScript : MonoBehaviour
         {
             menu.GetComponent<MenuItemScript>().EnableMenu();
         }
+        //Play sound
+        SoundManager.PlaySound(gameObject, SoundEffect.Inventory_Collect, 0.5f);
     }
 
-    public void DisableMenu() 
+    public void DisableMenu()
     {
         menuIsActive = false;
         Cursor.lockState = CursorLockMode.Locked;

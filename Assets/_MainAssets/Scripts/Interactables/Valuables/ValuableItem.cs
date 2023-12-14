@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ValuableType
 {
     // Can't be a checklist item, but still gives points
-    Money, 
+    Money,
     // Checklist Items
     Trophy,
     Figurine,
@@ -48,8 +48,10 @@ public class ValuableItem : MonoBehaviour, IInteractable
     public void Interact()
     {
         scoreScript.IncScore(scoreValue);
-
         checklistController.CheckValuable(this);
+        //Play sound
+        //SoundManager.PlaySound(gameObject, SoundEffect.Drop_Regular, 0.5f);
+        //SoundManager.PlaySound(gameObject, SoundEffect.Inventory_Collect, 0.5f);
 
         Destroy(gameObject);
     }

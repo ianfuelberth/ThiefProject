@@ -74,18 +74,21 @@ public class ThrowableTool : Tool
     {
         thrown = true;
         playerCam.GetComponentInChildren<ToolbeltController>().Throw(gameObject, throwForwardForce, throwUpwardForce);
+        //Play sound
+        SoundManager.PlaySound(gameObject, SoundEffect.Throw_Regular, 0.5f);
     }
     #endregion
 
-    private void OnCollisionEnter(Collision collision) {
-        if(thrown)
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (thrown)
         {
             if (navigationScript != null)
             {
                 navigationScript.Distract(transform.position);
                 thrown = false;
             }
-            
+
 
         }
     }

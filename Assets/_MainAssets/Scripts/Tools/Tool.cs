@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ToolType
-{   
+{
     // Empty Tool Slot
     NoTool,
     // Throwables
@@ -86,7 +86,8 @@ public abstract class Tool : MonoBehaviour, IInteractable
         {
 
             playerCam.GetComponent<ToolbeltController>().Equip(gameObject);
-            
+            // //Play sound
+            // SoundManager.PlaySound(gameObject, SoundEffect.Inventory_Collect, 0.5f);
         }
     }
 
@@ -95,6 +96,8 @@ public abstract class Tool : MonoBehaviour, IInteractable
         if (ToolType != ToolType.NoTool)
         {
             playerCam.GetComponent<ToolbeltController>().Drop(gameObject);
+            // //Play sound
+            // SoundManager.PlaySound(gameObject, SoundEffect.Drop_Regular, 0.5f);
         }
     }
 
