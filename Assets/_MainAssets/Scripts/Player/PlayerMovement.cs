@@ -68,6 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDir;
 
+    //Footstep Control
+    //private float nextStep = 10.0f;
+    //private float currentStep = 0.0f;
+
 
 
 
@@ -125,6 +129,14 @@ public class PlayerMovement : MonoBehaviour
             rb.angularDrag = 0;
         }
 
+        // //Check if the next footstep was be taken
+        // if (currentStep > nextStep)
+        // {
+        //     //Play sound
+        //     SoundManager.PlaySound(gameObject, SoundEffect.Footstep_Stone, 0.5f);
+        //     //reset footstep
+        //     currentStep = 0.0f;
+        // }
     }
 
     private void FixedUpdate()
@@ -157,12 +169,18 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+
+            // //increase footstep
+            // currentStep += 0.25f;
         }
         // Mode - Walking
         else if (grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+
+            // //increase footstep
+            // currentStep += 0.1f;
         }
         // Mode - Air
         else
@@ -343,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
                 exitWallTimer = exitWallTime;
                 StopClimbing();
             }
-        
+
         }
         // Exiting Climb
         else if (exitingWall)
@@ -363,7 +381,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (climbing) StopClimbing();
         }
-        
+
     }
     #endregion
 
@@ -399,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
             Tool activeTool = GameObject.FindGameObjectWithTag("PlayerCameraHolder").GetComponentInChildren<Camera>().GetComponent<ToolbeltController>().GetActiveTool();
             if (activeTool.GetType() == typeof(GrapplingHook))
             {
-                GrapplingHook gh = (GrapplingHook) activeTool;
+                GrapplingHook gh = (GrapplingHook)activeTool;
                 gh.StopGrapple();
             }
         }
