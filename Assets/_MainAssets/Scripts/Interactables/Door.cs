@@ -25,7 +25,7 @@ public class Door : MonoBehaviour, IInteractable
     private bool unlocksFromBehind = false;
     [SerializeField]
     private KeyID requiredKey;
-    
+
     [Header("References")]
     [SerializeField]
     private GameObject player;
@@ -34,6 +34,21 @@ public class Door : MonoBehaviour, IInteractable
     private Vector3 forward;
 
     private Coroutine animationCoroutine;
+
+    ////// Sound Effect Clips //////
+    AudioSource m_AudioSource;
+    [Header("Sound Effects")]
+    //sound settings
+    [SerializeField] float m_Volume = 0.5f;
+    //standard
+    [SerializeField] private AudioClip m_Unlocked;
+    [SerializeField] private AudioClip m_Locked;
+    [SerializeField] private AudioClip m_Open;
+    [SerializeField] private AudioClip m_Close;
+    //keycard
+    [SerializeField] private AudioClip m_KeycardAccept;
+    [SerializeField] private AudioClip m_KeycardReject;
+
 
 
     private void Awake()
@@ -45,6 +60,11 @@ public class Door : MonoBehaviour, IInteractable
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
+        //Set the audio source to THIS object's AudioSource component
+        m_AudioSource = GetComponent<AudioSource>();
+        m_AudioSource.volume = m_Volume;
+
+
     }
 
     public void Interact()
@@ -58,11 +78,17 @@ public class Door : MonoBehaviour, IInteractable
                 if (IsInteractingFromBehind(player.transform.position))
                 {
                     UseDoor();
+                    //play Sound
+                    m_AudioSource.clip = m_KeycardAccept;
+                    m_AudioSource.Play();
                     return;
                 }
                 else
                 {
                     statusDisplay.DisplayMessage(StatusMessage.LockedSide);
+                    //play Sound
+                    m_AudioSource.clip = m_Locked;
+                    m_AudioSource.Play();
                     return;
                 }
             }
@@ -71,6 +97,9 @@ public class Door : MonoBehaviour, IInteractable
             if (activeTool.GetType() != typeof(Key))
             {
                 statusDisplay.DisplayMessage(StatusMessage.WrongKey);
+                //play Sound
+                m_AudioSource.clip = m_KeycardReject;
+                m_AudioSource.Play();
                 return;
             }
             else
@@ -79,6 +108,9 @@ public class Door : MonoBehaviour, IInteractable
                 if (!activeKey.IsCorrectKey(requiredKey))
                 {
                     statusDisplay.DisplayMessage(StatusMessage.WrongKey);
+                    //play Sound
+                    m_AudioSource.clip = m_Locked;
+                    m_AudioSource.Play();
                     return;
                 }
             }
@@ -119,6 +151,9 @@ public class Door : MonoBehaviour, IInteractable
                 float dot = Vector3.Dot(forward, (userPosition - transform.position).normalized);
                 animationCoroutine = StartCoroutine(DoRotationOpen(dot));
             }
+            //play Sound
+            m_AudioSource.clip = m_Open;
+            m_AudioSource.Play();
         }
     }
 
@@ -135,6 +170,9 @@ public class Door : MonoBehaviour, IInteractable
             {
                 animationCoroutine = StartCoroutine(DoRotationClose());
             }
+            //play Sound
+            m_AudioSource.clip = m_Close;
+            m_AudioSource.Play();
         }
     }
 
