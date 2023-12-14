@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9d82ed81352bf664280373d39f5b07d4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - player: {instanceID: 0}
+  - m_Unlocked: {fileID: 8300000, guid: bfad8511d9893354688c21e7bb8b1902, type: 3}
+  - m_Locked: {fileID: 8300000, guid: f1a6f8c273c77de42a8d4e458f949f45, type: 3}
+  - m_Open: {fileID: 8300000, guid: 7b191f54df9012c44a061ccc859a9a65, type: 3}
+  - m_Close: {fileID: 8300000, guid: bd72b0669162e01478867fd669a49e24, type: 3}
+  - m_KeycardAccept: {fileID: 8300000, guid: 0a6face8176171749bc16d7d2e2e2f14, type: 3}
+  - m_KeycardReject: {fileID: 8300000, guid: 2e3f5a5fab1c58b4ea7c51bdf22020f2, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

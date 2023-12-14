@@ -225,6 +225,7 @@ public class ValuableSpawnManager : MonoBehaviour
     private void InitializeSpawnLocations()
     {
         remainingSpawnLocations = new List<ValuableSpawn>();
+        remainingMoneySpawns = new List<ValuableSpawn>();
 
         List<GameObject> spawnObjects = GameObject.FindGameObjectsWithTag("ValuableSpawn").ToList<GameObject>();
         foreach (GameObject go in spawnObjects)
