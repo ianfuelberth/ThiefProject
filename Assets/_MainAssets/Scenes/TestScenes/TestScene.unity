@@ -302,6 +302,7 @@ MonoBehaviour:
   max_dist: 15
   distractionRange: 30
   distractionTime: 5
+  isDistracted: 0
 --- !u!1 &308809910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,7 +1710,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1856393996066989167, guid: 656b35c3079784949aff775d90e39605, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 848605078416394074, guid: 656b35c3079784949aff775d90e39605, type: 3}
       propertyPath: m_Name
@@ -1954,6 +1955,10 @@ PrefabInstance:
     - target: {fileID: 4914299248685056130, guid: ccdf3d07573e84744a6cf5c434b460aa, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5963725285953447822, guid: ccdf3d07573e84744a6cf5c434b460aa, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8896505047745633555, guid: ccdf3d07573e84744a6cf5c434b460aa, type: 3}
       propertyPath: m_LocalPosition.x
