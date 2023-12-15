@@ -11,6 +11,7 @@ public class EscapeController : MonoBehaviour
     public bool canEscape = false;
     public bool timesUp = false;
     public bool escaped = false;
+    public bool displayTip = true;
     [SerializeField]
     private float missionDuration = 300;
     [SerializeField]
@@ -34,6 +35,15 @@ public class EscapeController : MonoBehaviour
 
         // Start the mission timer. Once it has run out, call OnMissionTimerFinish().
         TimerManager.Instance.StartTimer(missionDuration, timerText, OnMissionTimerFinish);
+    }
+
+    public void Update()
+    {
+        if (displayTip)
+        {
+            statusDisplay.DisplayMessage(StatusMessage.PlayerTip, 3f);
+            displayTip = false;
+        }
     }
 
     // Called by the Checklist Controller once the checklist has been completed. Enables Escape
@@ -101,7 +111,7 @@ public class EscapeController : MonoBehaviour
         TimerManager.Instance.StartTimer(endMissionStatusDuration, null, ReturnToMenu);
     }
     
-    // Return to start screen. re-enables cursor movement and visibility.
+    // Return to start screen. re-enables cursor movement and visibility.   
     public void ReturnToMenu()
     {
         Cursor.lockState = CursorLockMode.None;

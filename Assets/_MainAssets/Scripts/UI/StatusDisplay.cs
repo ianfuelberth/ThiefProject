@@ -11,7 +11,8 @@ public enum StatusMessage
     WrongKey,
     LockedSide,
     ToolMismatch,
-    AuthoritiesArrived
+    AuthoritiesArrived,
+    PlayerTip
 }
 
 // Handles the display of status messages for the player.
@@ -61,6 +62,10 @@ public class StatusDisplay : MonoBehaviour
         else if (status == StatusMessage.AuthoritiesArrived)
         {
             statusText.text = "The authorities have arrived!";
+        }
+        else if (status == StatusMessage.PlayerTip)
+        {
+            statusText.text = "TIP: Grab your tools from the back of the van!";
         }
 
         coroutine = StartCoroutine(FadeMessage(displayTime));
