@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Handles camera rotation based on mouse movement.
 public class PlayerCamera : MonoBehaviour
 {
     public float sensX;

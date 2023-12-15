@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Holds the player keybinds for actions for reference.
 public static class PlayerKeybinds
 {
     #region Keybinds

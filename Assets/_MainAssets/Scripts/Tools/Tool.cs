@@ -19,6 +19,7 @@ public enum ToolType
 
 }
 
+// An Interactable object that can be held by the player. can be used for a variety of purposes.
 public abstract class Tool : MonoBehaviour, IInteractable
 {
     public abstract ToolType ToolType { get; }

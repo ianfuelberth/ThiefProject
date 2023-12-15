@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Sample Use of PulseActivator as a button. See TestScene.
 public class TestButton : PulseActivator
 {
     [Header("Settings")]

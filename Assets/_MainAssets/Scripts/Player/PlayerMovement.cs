@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Handles player movement. Includes WASD movment, jumping, crouching, air control, slope handling, climbing, and grapple movement.
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]

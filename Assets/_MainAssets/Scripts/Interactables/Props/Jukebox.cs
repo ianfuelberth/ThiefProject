@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// A fun easter-egg interaction that turns on/off the background music if the jukebox is interacted with.
 public class Jukebox : MonoBehaviour, IInteractable
 {
     [Header("References")]
@@ -12,7 +13,6 @@ public class Jukebox : MonoBehaviour, IInteractable
 
     private float initVolume;
 
-    // turn off game music as easter-egg. remove interactable tag?
     public void Interact()
     {
         if (isMuted)
