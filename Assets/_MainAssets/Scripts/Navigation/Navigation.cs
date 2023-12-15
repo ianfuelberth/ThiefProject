@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+// Controller for AI Navigation
 public class Navigation : MonoBehaviour
 {
-
     public Transform player;
     public float max_dist = 15f;
     private NavMeshAgent agent;
@@ -19,37 +19,100 @@ public class Navigation : MonoBehaviour
     private Vector3 distractionPosition;
     private float distractionTimer;
 
+    private GameObject[] patrolPoints;
+
+    private Door[] doors;
+    public float doorOpenRange = 2.0f;
+    public bool isActive = false;
+
+    private EscapeController escapeController;
+
     // Start is called before the first frame update
     void Start()
     {        
         agent = GetComponent<NavMeshAgent>();
+        patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoint");
+
+        // get all doors
+        GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
+        List<Door> doorList = new List<Door>();
+        foreach (GameObject interactable in interactables)
+        {
+            if (interactable.GetComponent<Door>() != null)
+            {
+                doorList.Add(interactable.GetComponent<Door>());
+            }
+        }
+        doors = doorList.ToArray();
+    
+        escapeController = GameObject.FindGameObjectWithTag("Escape").GetComponent<EscapeController>();
+        // TimerManager.Instance.StartTimer(escapeController.GetMissionDuration(), null, this.ActivateAI);
+
     }
 
     void Update() 
     {
-        targetDist = Vector3.Distance(player.position, transform.position);
-
-        if(!isDistracted && targetDist < 15 && HasLineOfSightToPlayer())
+        if (isActive)
         {
-            agent.SetDestination(player.position);
+            targetDist = Vector3.Distance(player.position, transform.position);
+
+            CheckPlayerCollision();
+            OpenNearbyDoors();
+
+            if (!isDistracted && targetDist < 15 && HasLineOfSightToPlayer())
+            {
+                agent.SetDestination(player.position);
+            }
+
+            else if (isDistracted && distractionTimer > 0f)
+            {
+                // AI is distracted, head towards the distraction position
+                agent.SetDestination(distractionPosition);
+                distractionTimer -= Time.deltaTime;
+
+                // Reset distraction
+                if (distractionTimer <= 0f) isDistracted = false;
+            }
+
+            else if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+            {
+                // If the AI can't find the player and has reached the last known position, go to a random patrol point
+                if (patrolPoints.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, patrolPoints.Length);
+                    GameObject randomPatrolPoint = patrolPoints[randomIndex];
+
+                    // Set the destination to the selected patrol point
+                    agent.SetDestination(randomPatrolPoint.transform.position);
+                }
+            }
+
+            if (targetDist <= agent.stoppingDistance)
+            {
+                // animator.SetFloat("forward", 2.0f);
+                // FaceTarget();
+            }
+
         }
 
-        else if (isDistracted && distractionTimer > 0f)
+
+
+    }
+
+    public void ActivateAI()
+    {
+        isActive = true;
+    }
+
+    private void OpenNearbyDoors()
+    {
+        foreach(Door door in doors)
         {
-            // AI is distracted, head towards the distraction position
-            agent.SetDestination(distractionPosition);
-            distractionTimer -= Time.deltaTime;
-
-            // Reset distraction
-            if (distractionTimer <= 0f) isDistracted = false;
+            if (Vector3.Distance(transform.position, door.gameObject.transform.position) < doorOpenRange)
+            {
+                door.DoorOpenOverride(this);
+            }
         }
-
-        if (targetDist <= agent.stoppingDistance)
-        {
-            // animator.SetFloat("forward", 2.0f);
-            // FaceTarget();
-        }
-
     }
 
     bool HasLineOfSightToPlayer()
@@ -66,15 +129,25 @@ public class Navigation : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("Lost Line of Sight");
         // Line of sight is obstructed
         return false;
     }
 
 
-    void PlaySound()
+    private bool CheckPlayerCollision()
     {
+        bool caughtPlayer = false;
 
+        if(Vector3.Distance(transform.position, player.transform.position) < 1.0f)
+        {
+            caughtPlayer = true;
+            escapeController.EscapeFailed();
+            isActive = false;
+        }
+
+        
+
+        return caughtPlayer;
     }
 
     void FaceTarget()
@@ -87,7 +160,6 @@ public class Navigation : MonoBehaviour
     // Called when a throwable object is thrown and lands within distraction range
     public void Distract(Vector3 position)
     {
-        Debug.Log(position);
         if (!isDistracted && !HasLineOfSightToPlayer())
         {
             // Set distraction position and start distraction timer

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Handles the player's Interact action and the outline/highlights of nearby interactables.
 public class PlayerInteractController : MonoBehaviour
 {
     private GameObject canvas;
@@ -38,6 +39,7 @@ public class PlayerInteractController : MonoBehaviour
 
     void Update()
     {
+        // If player presses the Interact key while in range and looking at an Interactable object, call its Interact() method.
         if (Input.GetKeyDown(PlayerKeybinds.INTERACT_KEY))
         {
             Ray r = new Ray(InteractSource.position, InteractSource.forward);
@@ -46,13 +48,12 @@ public class PlayerInteractController : MonoBehaviour
                 if (hit.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     interactObj.Interact();
-
-                    // scoreTrackerScript.IncScore(15);
                 }
             }
         }
     }
 
+    // Adds/Removes Outlines of Interactables based on Settings
     private void FixedUpdate()
     {
         ClearActiveOutlines();
@@ -69,6 +70,7 @@ public class PlayerInteractController : MonoBehaviour
     }
 
     #region Outlines
+    // Clears all Interactable outlines.
     private void ClearActiveOutlines()
     {
         GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag("Interactable");
@@ -82,6 +84,7 @@ public class PlayerInteractController : MonoBehaviour
         }
     }
 
+    // Adds an Outline component to any Interactable objects within range.
     private void AddOutlineByProximity()
     {
         Collider[] hitColliders = Physics.OverlapSphere(InteractSource.position, outlineProxRange, nonHeldLayer);
@@ -112,6 +115,7 @@ public class PlayerInteractController : MonoBehaviour
         }
     }
 
+    // Adds an Outline component to any Interactable objects in range and in front of the player.
     private void AddOutlineByRaycast()
     {
         RaycastHit hit;

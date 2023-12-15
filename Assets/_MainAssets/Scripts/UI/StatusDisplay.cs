@@ -10,10 +10,12 @@ public enum StatusMessage
     YouLose,
     WrongKey,
     LockedSide,
-    ToolMismatch
+    ToolMismatch,
+    AuthoritiesArrived,
+    PlayerTip
 }
 
-
+// Handles the display of status messages for the player.
 public class StatusDisplay : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +30,7 @@ public class StatusDisplay : MonoBehaviour
         statusText.text = string.Empty;
     }
 
+    // Display Status Message To Player
     public void DisplayMessage(StatusMessage status, float displayTime = 2.0f)
     {
         if (coroutine != null)
@@ -56,6 +59,14 @@ public class StatusDisplay : MonoBehaviour
         {
             statusText.text = "The door is locked from this side.";
         }
+        else if (status == StatusMessage.AuthoritiesArrived)
+        {
+            statusText.text = "The authorities have arrived!";
+        }
+        else if (status == StatusMessage.PlayerTip)
+        {
+            statusText.text = "TIP: Grab your tools from the back of the van!";
+        }
 
         coroutine = StartCoroutine(FadeMessage(displayTime));
     }
@@ -67,6 +78,7 @@ public class StatusDisplay : MonoBehaviour
         statusText.text = string.Empty;
     }
 
+    // fades out the current status message over time
     private IEnumerator FadeMessage(float displayTime)
     {
         float startTime = Time.time;

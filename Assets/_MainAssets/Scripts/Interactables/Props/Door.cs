@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// https://www.youtube.com/watch?v=cPltQK5LlGE 
+// Interactable Door. Opens upon Interaction.
 public class Door : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
@@ -57,8 +57,10 @@ public class Door : MonoBehaviour, IInteractable
     {
         StatusDisplay statusDisplay = GameObject.FindGameObjectWithTag("Canvas").GetComponentInChildren<StatusDisplay>();
 
+        // Check if door is locked
         if (isLockedDoor)
         {
+            // Handle interaction if door can be unlocked from behind
             if (unlocksFromBehind)
             {
                 if (IsInteractingFromBehind(player.transform.position))
@@ -75,6 +77,7 @@ public class Door : MonoBehaviour, IInteractable
                 }
             }
 
+            // Check if player is holding the correct key.
             Tool activeTool = Camera.main.GetComponent<ToolbeltController>().GetActiveTool();
             if (activeTool.GetType() != typeof(Key))
             {
@@ -102,6 +105,16 @@ public class Door : MonoBehaviour, IInteractable
 
     }
 
+    // Used by AI to automatically open nearby doors.
+    public void DoorOpenOverride(Navigation nav)
+    {
+        if (nav != null && !isOpen)
+        {
+            UseDoor();
+        }
+    }
+
+    // Opens/Closes the door based on current state.
     private void UseDoor()
     {
         isLockedDoor = false;
@@ -119,6 +132,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // Opens the door away from the user's position
     public void Open(Vector3 userPosition)
     {
         if (!isOpen)
@@ -136,6 +150,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // Closes the door
     public void Close()
     {
         if (isOpen)
@@ -152,6 +167,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // returns true if the player is interacting from the "back" side of the door.
     private bool IsInteractingFromBehind(Vector3 userPosition)
     {
         float dot = Vector3.Dot(forward, (userPosition - transform.position).normalized);
@@ -165,6 +181,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // Handles the animation of the door opening.
     private IEnumerator DoRotationOpen(float forwardAmount)
     {
         Quaternion startRotation = transform.rotation;
@@ -191,6 +208,7 @@ public class Door : MonoBehaviour, IInteractable
         }
     }
 
+    // Handles the animation of the door closing.
     private IEnumerator DoRotationClose()
     {
         Quaternion startRotation = transform.rotation;
@@ -208,5 +226,14 @@ public class Door : MonoBehaviour, IInteractable
         SoundManager.PlaySound(gameObject, SoundEffect.Door_Close, m_Volume);
     }
 
-
+    /*
+    private void OnCollisionEnter(Collision collision) {
+        Debug.Log(collision);
+        if(collision.gameObject.tag == "AI")
+        {
+            Debug.Log("Collision with the AI!");
+            Open(collision.gameObject.transform.position);
+        }
+    }
+    */
 }

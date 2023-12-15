@@ -16,7 +16,7 @@ public enum ValuableType
 
 }
 
-
+// An Interactable item that awards points when interacted with.
 public class ValuableItem : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
@@ -29,6 +29,7 @@ public class ValuableItem : MonoBehaviour, IInteractable
 
     public void Start()
     {
+        // Initialize References if not already set.
         if (scoreScript == null)
         {
             scoreScript = GameObject.FindWithTag("Canvas").GetComponentInChildren<Score>();
@@ -47,8 +48,12 @@ public class ValuableItem : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        // Increase the score by the valuable's score value.
         scoreScript.IncScore(scoreValue);
+
+        // Update the checklsit if the valuable is a checklist item.
         checklistController.CheckValuable(this);
+        
         //Play sound
         //SoundManager.PlaySound(gameObject, SoundEffect.Drop_Regular, 0.5f);
         //SoundManager.PlaySound(gameObject, SoundEffect.Inventory_Collect, 0.5f);
