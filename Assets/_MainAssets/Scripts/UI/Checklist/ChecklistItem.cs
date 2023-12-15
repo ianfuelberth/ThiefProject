@@ -18,10 +18,7 @@ public class ChecklistItem: MonoBehaviour
     [SerializeField]
     private TMP_Text strikethrough;
 
-    
-
-    
-
+    // Initialize the display info to the given ValuableType.
     public void InitializeItem(ValuableType type)
     {
         valuableType = type;

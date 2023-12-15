@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// SoundEffect types
 public enum SoundEffect
 {
     Door_Open,
@@ -30,13 +31,14 @@ public enum SoundEffect
 
 }
 
+// Manages playing audio clips
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
 
     [SerializeField] private Dictionary<SoundEffect, List<AudioClip>> soundMap = new Dictionary<SoundEffect, List<AudioClip>>();
 
-
+    // Initialize Instance
     private void Awake()
     {
         if (instance != null)
@@ -52,6 +54,7 @@ public class SoundManager : MonoBehaviour
         InitializeSoundMap();
     }
 
+    // Maps Sound Effects found in "Assets/_MainAssets/Audio/Resources/" to SoundEffect types.
     private void InitializeSoundMap()
     {
         // Door
@@ -81,6 +84,7 @@ public class SoundManager : MonoBehaviour
         MapSoundEffectToAudioClip(SoundEffect.Inventory_Collect, "inventoryCollect");
     }
 
+    // Maps a single Audio Clip to a SoundEffect
     private void MapSoundEffectToAudioClip(SoundEffect key, string clipPath)
     {
         AudioClip clip = Resources.Load<AudioClip>(clipPath);
@@ -95,6 +99,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Maps multiple AudioClips to a SoundEffect
     private void MapSoundEffectToAudioClips(SoundEffect key, string[] clipPaths)
     {
         List<AudioClip> clips = new List<AudioClip>();
@@ -119,6 +124,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Plays the audio clip mapped to the SoundEffect key on the AudioSource component of the sourceObj. Creates an AudioSource if one does not already exist.
     public static void PlaySound(GameObject sourceObj, SoundEffect key, float volume = 1.0f, bool overrideExistingSounds = false, bool loop = false, bool playOnAwake = false)
     {
         if (instance != null && instance.soundMap.ContainsKey(key))
@@ -162,6 +168,7 @@ public class SoundManager : MonoBehaviour
         
     }
 
+    // Stops the sound clip playing on the AudioSource component of the specified sourceObj.
     public static void StopSound(GameObject sourceObj)
     {
         AudioSource audioSource = sourceObj.GetComponent<AudioSource>();

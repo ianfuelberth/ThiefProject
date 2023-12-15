@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine;
 using Random = System.Random;
 
+// Controller for spawning valuables and initializing a checklist.
 public class ValuableSpawnManager : MonoBehaviour
 {
     [Header("Settings")]
@@ -48,6 +49,32 @@ public class ValuableSpawnManager : MonoBehaviour
         SpawnExtraMoney();
     }
 
+    // Initialize the list of all remaining ValuableSpawns in the scene. Separate Money spawns into its own list for ease of checklist creation.
+    private void InitializeSpawnLocations()
+    {
+        remainingSpawnLocations = new List<ValuableSpawn>();
+        remainingMoneySpawns = new List<ValuableSpawn>();
+
+        List<GameObject> spawnObjects = GameObject.FindGameObjectsWithTag("ValuableSpawn").ToList<GameObject>();
+        foreach (GameObject go in spawnObjects)
+        {
+            ValuableSpawn spawn = go.GetComponent<ValuableSpawn>();
+            if (spawn != null)
+            {
+                if (spawn.GetValuableType() == ValuableType.Money)
+                {
+                    remainingMoneySpawns.Add(spawn);
+                }
+                else
+                {
+                    remainingSpawnLocations.Add(spawn);
+                }
+
+            }
+        }
+    }
+
+    // Spawn the valuables required for mission completion and update the ChecklistController to match.
     private void SpawnChecklistValuables()
     {
         List<ValuableType> checklistItems = new List<ValuableType>();
@@ -76,6 +103,7 @@ public class ValuableSpawnManager : MonoBehaviour
         checklistController.InitializeChecklist(checklistItems.ToArray());
     }
 
+    // Spawn in extra valuables for the player to find. Can make the checklist easier to fill out and points easier to gain.
     private void SpawnExtraValuables()
     {
         Random rnd = new Random();
@@ -98,6 +126,7 @@ public class ValuableSpawnManager : MonoBehaviour
         }
     }
 
+    // Spawn in money for additional opportunities at gaining points.
     private void SpawnExtraMoney()
     {
         Random rnd = new Random();
@@ -120,6 +149,7 @@ public class ValuableSpawnManager : MonoBehaviour
         }
     }
 
+    // Spawns in a valuable at spawnIndex of the remainingSpawnLocations. Remove and return this newly activated spawn.
     private ValuableSpawn SpawnNewValuable(int spawnIndex)
     {
         ValuableSpawn removedSpawn = null;
@@ -134,6 +164,7 @@ public class ValuableSpawnManager : MonoBehaviour
         return removedSpawn;
     }
 
+    // Spawns in a valuable at spawnIndex of the remainingMoneySpawns. Remove and return this newly activated spawn.
     private ValuableSpawn SpawnNewMoney(int spawnIndex)
     {
         ValuableSpawn removedSpawn = null;
@@ -148,6 +179,7 @@ public class ValuableSpawnManager : MonoBehaviour
         return removedSpawn;
     }
 
+    // Attempt to activate the given ValuableSpawn. Returns true if successful.
     private bool TryFillSpawnLocation(ValuableSpawn spawnLocation)
     {
         bool valid = false;
@@ -164,11 +196,11 @@ public class ValuableSpawnManager : MonoBehaviour
         
     }
 
+    // Returns a random prefab of the given ValuableType.
     private GameObject GetPrefabOfType(ValuableType type)
     {
         GameObject valuablePrefab = null;
 
-        // List<GameObject> prefabs = new List<GameObject>();
         Random rnd = new Random();
 
         // Determine Prefab Type
@@ -222,33 +254,5 @@ public class ValuableSpawnManager : MonoBehaviour
         return valuablePrefab;
     }    
 
-    private void InitializeSpawnLocations()
-    {
-        remainingSpawnLocations = new List<ValuableSpawn>();
-        remainingMoneySpawns = new List<ValuableSpawn>();
 
-        List<GameObject> spawnObjects = GameObject.FindGameObjectsWithTag("ValuableSpawn").ToList<GameObject>();
-        foreach (GameObject go in spawnObjects)
-        {
-            ValuableSpawn spawn = go.GetComponent<ValuableSpawn>();
-            if (spawn != null)
-            {
-                if (spawn.GetValuableType() == ValuableType.Money)
-                {
-                    remainingMoneySpawns.Add(spawn);
-                }
-                else
-                {
-                    remainingSpawnLocations.Add(spawn);
-                }
-                
-            }
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

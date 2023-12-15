@@ -24,7 +24,6 @@ public class ChecklistController : MonoBehaviour
     [SerializeField]
     private ChecklistItem defaultChecklistItem;
     
-    // Start is called before the first frame update
     void Start()
     {
         ToggleEscapeMessage(false);
@@ -35,6 +34,7 @@ public class ChecklistController : MonoBehaviour
         }
     }
 
+    // Fills the checklsit with items of ValuableType.
     public void InitializeChecklist(ValuableType[] checklistTypes)
     {
         for (int i = 0; i < checklistTypes.Length; i++)
@@ -61,6 +61,7 @@ public class ChecklistController : MonoBehaviour
         return isCompleted;
     }
 
+    // Updates display if player can escape.
     private void ToggleEscapeMessage(bool isActive)
     {
         float transparency = 0f;
@@ -71,6 +72,7 @@ public class ChecklistController : MonoBehaviour
         EscapeAvailableText.GetComponent<CanvasGroup>().alpha = transparency;
     }
 
+    // Check if the provided valuable would count towards a checklist item. If so, MarkAsCollected.
     public void CheckValuable(ValuableItem valuable)
     {
         foreach (ChecklistItem item in checklistItems)

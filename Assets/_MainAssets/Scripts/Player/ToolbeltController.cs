@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Controller for Player Toolbelt and Tools.
 public class ToolbeltController : MonoBehaviour
 {
     [Header("Toolbelt")]
@@ -13,14 +14,6 @@ public class ToolbeltController : MonoBehaviour
     public GameObject noToolPrefab;
     public GameObject player;
     
-
-    //---HELD ITEM---//
-    /*
-    private GameObject heldObj;
-    private Tool heldTool;
-    private Rigidbody heldRb;
-    private int heldCount = 0;
-    */
     //---DETAILS---//
     private bool canDrop = true;
     private int layerNum;
@@ -47,10 +40,11 @@ public class ToolbeltController : MonoBehaviour
     {
         if (HasActiveTool())
         {
+            // Handle movement of held (active) tool. Ensure it doesn't cause collision with player.
             Physics.IgnoreCollision(GetActiveTool().gameObject.GetComponent<Collider>(), gameObject.GetComponentInChildren<Collider>(), true);
-
             MoveActiveObject();
 
+            // Handle inputs tied to tools.
             if (Input.GetKeyUp(PlayerKeybinds.PRIMARY_USE_KEY))
             {
                 GetActiveTool().PrimaryUse();
@@ -66,6 +60,7 @@ public class ToolbeltController : MonoBehaviour
         }
     }
 
+    // Equip the given tool GameObject. (Makes it held/active).
     public void Equip(GameObject toolObj)
     {
         Tool tool = toolObj.GetComponent<Tool>();
@@ -104,6 +99,7 @@ public class ToolbeltController : MonoBehaviour
         }
     }
 
+    // Drop the currently held tool.
     public void Drop(GameObject toolObj)
     {
         if (!canDrop) { return; }
@@ -143,6 +139,7 @@ public class ToolbeltController : MonoBehaviour
 
     }
 
+    // Throw the currently held tool. 
     public void Throw(GameObject toolObj, float throwForwardForce, float throwUpwardForce)
     {
         if (!canDrop) { return; }
@@ -221,6 +218,7 @@ public class ToolbeltController : MonoBehaviour
         }
     }
 
+    // Helps prevent things like the player jumping off of an item they just dropped.
     private void QueueReEnableCollisionsWith(Tool tool, GameObject heldObject)
     {
         tool.QueueReEnableCollisionWith(heldObject);

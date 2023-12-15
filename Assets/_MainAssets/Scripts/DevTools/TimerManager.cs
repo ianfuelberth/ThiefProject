@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Used to create and manage timers
 public class TimerManager : MonoBehaviour
 {
     private static TimerManager instance;
@@ -36,6 +37,8 @@ public class TimerManager : MonoBehaviour
         }
     }
 
+    // Start a timer that lasts for duration seconds. if provided, displays the timer on a TMP_Text.
+    // If provided, will also call a provided method upon the timer's completion.
     public void StartTimer(float duration, TMP_Text timerText = null, System.Action onFinishCallback = null)
     {
         remainingTime = duration;
@@ -64,6 +67,7 @@ public class TimerManager : MonoBehaviour
         }
     }
 
+    // Used for running a coroutine timer
     private IEnumerator RunTimer(TMP_Text timerText, System.Action onFinishCallback)
     {
         while (remainingTime > 0)
@@ -81,6 +85,7 @@ public class TimerManager : MonoBehaviour
         onFinishCallback?.Invoke();
     }
 
+    // Displays the time remaining on the TMP_Text provided.
     private void UpdateTimerText(float time, TMP_Text timerText)
     {
         int minutes = Mathf.FloorToInt(time / 60);
